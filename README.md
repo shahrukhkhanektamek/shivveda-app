@@ -182,7 +182,7 @@ git rm -r --cached ios/build
 git add .
 git commit -m "Clean ignored files"
 git push
-
+  
 
 git pull origin main
 
