@@ -7,10 +7,13 @@ import {
   RefreshControl,
 } from 'react-native';
 import theme from '../../../StyleSheet/theme';
-
-
+import { WebView } from 'react-native-webview';
+import { MMKV } from "react-native-mmkv";
+const storage = new MMKV();
 
 export function TreeScreen({ navigation, extraData=[] }) {
+
+  const [userDetail, setuserDetail] = useState(JSON.parse(storage.getString("user")));
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -25,20 +28,16 @@ export function TreeScreen({ navigation, extraData=[] }) {
     <View style={{ flex: 1 }}>
 
 
-        <FlatList
-            ListHeaderComponent={
-            <>
-                <View style={theme.themeBg}>
-                    <View style={[theme.card]}>
-                      <View style={[theme.cardBody]}>
-                            <Text style={{fontSize:50,textAlign:'center'}}>Tree</Text>
-                      </View>
-                    </View>
-                </View>
-                </>
-                }
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-        />
+       
+
+                      <WebView
+                         originWhitelist={['*']}
+                         
+                      style={[styles.webview]} source={{ uri: `https://shivveda.in/tree?id=${userDetail.id}` }} 
+                      scalesPageToFit={false}
+                      javaScriptEnabled={true}
+                      />
+                             
 
 
       
@@ -48,6 +47,10 @@ export function TreeScreen({ navigation, extraData=[] }) {
 
 const styles = StyleSheet.create({
   amount: { fontSize: 15, fontWeight: 'bold' },
+  webview:{
+    height:500,
+    width:'100%'
+  }
 });
 
 

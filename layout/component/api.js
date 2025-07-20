@@ -228,12 +228,16 @@ const storeLoginToken = (result) => {
 
 export const convertToBase64 = async (uri) => {
   try {
-    const base64String = await RNFS.readFile(uri, 'base64');
-    const base64Image = `data:image/jpeg;base64,${base64String}`; // Use correct MIME type if needed
-    // console.log('Base64 Image:', base64Image);
-    return base64Image;
-    // You can now upload this Base64 string
-    // uploadImage(base64Image);
+
+    if(uri)
+    {      
+      const base64String = await RNFS.readFile(uri, 'base64');
+      const base64Image = `data:image/jpeg;base64,${base64String}`; // Use correct MIME type if needed
+      // console.log('Base64 Image:', base64Image);
+      return base64Image;
+      // You can now upload this Base64 string
+      // uploadImage(base64Image);
+    }
   } catch (error) {
     console.log('Error converting to Base64:', error);
   }

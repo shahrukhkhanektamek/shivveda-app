@@ -13,8 +13,9 @@ const StatePicker = ({ selectedState, setSelectedState, extraData=[] }) => {
   const [search, setSearch] = useState('');
   const [selectedStateName, setSelectedStateName] = useState();
   const [data, setData] = useState([]);
+  
 
-
+  
 
   useEffect(() => {
     fetchPickerData();

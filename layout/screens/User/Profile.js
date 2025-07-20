@@ -34,24 +34,31 @@ export function ProfileScreen({ navigation, extraData=[] }){
   const [selectedCountry, setSelectedCountry] = useState();
   const [selectedState, setSelectedState] = useState();
   const [name, setname] = useState();
+  const [lname, setlname] = useState();
   const [email, setemail] = useState();
   const [phone, setphone] = useState();
   const [address, setaddress] = useState();
   const [city, setcity] = useState();
   const [user_id, setuser_id] = useState();
-  const filedata = {
-      "name":name,
-      "email":email,
-      "phone":phone,
-      "address":address,
-      "country":selectedCountry,
-      "state":selectedState,
-      "city":city
-  };
+  
 
 
   const handleSubmit = async () => {  
     try {
+
+        const filedata = {
+          "name":name,
+          "lname":lname,
+          "email":email,
+          // "phone":phone,
+          "address":address,
+          "country":selectedCountry,
+          "state":selectedState,
+          "city":city
+      };
+    
+      // console.log(filedata);
+
         const response = await postData(filedata, urls.updateProfile, "POST", navigation, extraData);
         if(response.status==200)
             {
@@ -65,8 +72,8 @@ export function ProfileScreen({ navigation, extraData=[] }){
     
     
   const [data, setData] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
-  const fetchData = async () => {
+  const [refreshing, setRefreshing] = useState(false); 
+  const fetchData = async () => { 
       try {
         const response = await postData({}, urls.getProfile, "GET", navigation, extraData);
         if(response.status==200)
@@ -74,8 +81,9 @@ export function ProfileScreen({ navigation, extraData=[] }){
           const data = response.data; 
           setData(data);
           setname(data.name)
-          setemail(data.email)
-          setphone(data.phone)
+          setlname(data.lname)
+          setemail(data.email) 
+          setphone(data.phone) 
           setaddress(data.address)
           setSelectedState(data.state)
           setcity(data.city)
@@ -159,7 +167,7 @@ export function ProfileScreen({ navigation, extraData=[] }){
         <View style={[theme.row]}>
             
             
-            <View style={[theme.col6]}>
+            {/* <View style={[theme.col6]}>
               <View style={theme.inputContainer}>
                 <Icon name="star" size={20} style={theme.inputIcon} />
                 <TextInput
@@ -184,7 +192,7 @@ export function ProfileScreen({ navigation, extraData=[] }){
                   value={data.sponser_name}
                 />
               </View>
-            </View>
+            </View> */}
 
 
             
@@ -200,8 +208,21 @@ export function ProfileScreen({ navigation, extraData=[] }){
                 />
               </View>
             </View>
-
+            
             <View style={[theme.col6]}>
+              <View style={theme.inputContainer}>
+                <Icon name="user" size={20} style={theme.inputIcon} />
+                <TextInput
+                  style={theme.input}
+                  placeholder="Last Name"
+                  placeholderTextColor="#999"
+                  value={lname}
+                  onChangeText={setlname}
+                />
+              </View>
+            </View>
+
+            <View style={[theme.col12]}>
               <View style={theme.inputContainer}>
                 <Icon name="envelope" size={20} style={theme.inputIcon} />
                 <TextInput
@@ -232,6 +253,7 @@ export function ProfileScreen({ navigation, extraData=[] }){
                   placeholderTextColor="#999"
                   value={phone}
                   onChange={setphone}
+                  keyboardType='numeric'
                 />
               </View>
             </View>

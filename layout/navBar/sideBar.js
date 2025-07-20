@@ -121,46 +121,57 @@ const SideBar = ({ navigation, extraData = [] }) => {
             <View style={styles.divider} />
 
 
+
+            <>
+              {userDetail.is_paid == 0 ? (
+                <>
+                  <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("AccountActivation")}>
+                    <View style={styles.menuIcon}>
+                      <Icon name="checkmark-circle" style={[theme.sideBarIconColor]} />
+                    </View>
+                    <Text style={styles.menuTextLabel}>Account Activation</Text>
+                  </TouchableOpacity>
+                  <View style={styles.divider} />
+                </>
+              ) : (
+                <>
+                  {/* 👇 Re Purchase Menu with Submenu */}
+                  <TouchableOpacity style={styles.menuItem} onPress={() => toggleSubmenu("rePurchase")}>
+                    <View style={styles.menuIcon}>
+                      <Icon name="cart" style={[theme.sideBarIconColor]} />
+                    </View>
+                    <Text style={styles.menuTextLabel}>Repurchase</Text>
+                    <Icon
+                      name={expandedMenus.rePurchase ? "chevron-up" : "chevron-down"}
+                      size={20}
+                      style={{ marginLeft: "auto", color: "#000" }}
+                    />
+                  </TouchableOpacity>
+
+                  {expandedMenus.rePurchase && (
+                    <View style={styles.subMenuContainer}>
+                      <TouchableOpacity style={styles.subMenuItem} onPress={() => navigation.navigate("Products")}>
+                        <Text style={styles.menuTextLabel}>Product</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.subMenuItem} onPress={() => navigation.navigate("Order")}>
+                        <Text style={styles.menuTextLabel}>My Orders</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.subMenuItem} onPress={() => navigation.navigate("RepurchaseBusiness")}>
+                        <Text style={styles.menuTextLabel}>Repurchase Business</Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+
+                  <View style={styles.divider} />
+                  {/* ☝ End Submenu */}
+                </>
+              )}
+            </>
             
-            {/* 👇 Re Purchase Menu with Submenu */}
-            <TouchableOpacity style={styles.menuItem} onPress={() => toggleSubmenu("rePurchase")}>
-              <View style={styles.menuIcon}>
-                <Icon name="cart" style={[theme.sideBarIconColor]} />
-              </View>
-              <Text style={styles.menuTextLabel}>Repurchase</Text>
-              <Icon
-                name={expandedMenus.rePurchase ? "chevron-up" : "chevron-down"}
-                size={20}
-                style={{ marginLeft: "auto", color: "#000" }}
-              />
-            </TouchableOpacity>
-            {expandedMenus.rePurchase && (
-              <View style={styles.subMenuContainer}>
-                <TouchableOpacity style={styles.subMenuItem} onPress={() => navigation.navigate("Products")}>
-                  <Text style={styles.menuTextLabel}>Product</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.subMenuItem} onPress={() => navigation.navigate("Order")}>
-                  <Text style={styles.menuTextLabel}>My Orders</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.subMenuItem} onPress={() => navigation.navigate("RepurchaseBusiness")}>
-                  <Text style={styles.menuTextLabel}>Repurchase Business</Text>
-                </TouchableOpacity>
-              </View>
-            )}
-            <View style={styles.divider} />
-            {/* ☝ End Submenu */}
+            
 
 
-
-
-
-            <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("AccountActivation")}>
-              <View style={styles.menuIcon}>
-                <Icon name="checkmark-circle" style={[theme.sideBarIconColor]} />
-              </View>
-              <Text style={styles.menuTextLabel}>Account Activation</Text>
-            </TouchableOpacity>
-            <View style={styles.divider} />
+            
 
           
 

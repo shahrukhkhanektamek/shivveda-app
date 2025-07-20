@@ -29,6 +29,7 @@ export function EarningScreen({ navigation, extraData=[] }){
     const [unpaid, setunpaid] = useState(0);
 
     const [data, setData] = useState([]);
+    const [amountdata, setamountData] = useState([]);
     const [page, setPage] = useState(0);
     const [refreshing, setRefreshing] = useState(false);
     const fetchData = async (pagep) => {
@@ -37,6 +38,7 @@ export function EarningScreen({ navigation, extraData=[] }){
             if(response.status==200)
             {
             const data = response.data.list; 
+            setamountData(response.data);
             setData(prevData => pagep === 0 ? data : [...prevData, ...data]);
 
             setpaid(response.data.paid);
@@ -48,8 +50,8 @@ export function EarningScreen({ navigation, extraData=[] }){
     };
 
     const selectType = (type) => {
-        setPage(0);
         settype(type);
+        setPage(0);
         fetchData(page)
     };
 
@@ -82,25 +84,55 @@ export function EarningScreen({ navigation, extraData=[] }){
                 <View style={theme.themeBg}>
 
                     <View style={[theme.card]}>
-                        <View style={[theme.cardBody, styles.walletBoxRow]}>
+                        <View style={[theme.cardBody, theme.row]}>
                             
-                            <View style={[theme.scol3]}>
+                            <View style={[theme.col6, theme.mb5]}>
                                 <View style={[styles.walletBox]}>
-                                    <Icon name='inr' style={[styles.inrIcon]}/>
-                                    <Text style={[styles.walletPrice]}>{paid}</Text>
+                                    <Text style={[styles.walletPrice]}>{amountdata.totalEarning}</Text>
+                                    <Text style={[styles.walletBoxText]}>Total Eearning</Text>
+                                </View>
+                            </View>
+                            
+                            <View style={[theme.col6, theme.mb5]}>
+                                <View style={[styles.walletBox]}>
+                                    <Text style={[styles.walletPrice]}>{amountdata.totalTds}</Text>
+                                    <Text style={[styles.walletBoxText]}>Total TDS</Text>
+                                </View>
+                            </View>
+                            
+                            <View style={[theme.col6, theme.mb5]}>
+                                <View style={[styles.walletBox]}>
+                                    <Text style={[styles.walletPrice]}>{amountdata.totalWallet}</Text>
+                                    <Text style={[styles.walletBoxText]}>Total R. Wallet</Text>
+                                </View>
+                            </View>
+                            
+                            <View style={[theme.col6, theme.mb5]}>
+                                <View style={[styles.walletBox]}>
+                                    <Text style={[styles.walletPrice]}>{amountdata.finalEarning}</Text>
+                                    <Text style={[styles.walletBoxText]}>Total Final Earning</Text>
+                                </View>
+                            </View>
+                            
+                            <View style={[theme.col6, theme.mb5]}>
+                                <View style={[styles.walletBox]}>
+                                    <Text style={[styles.walletPrice]}>{amountdata.unPaid}</Text>
+                                    <Text style={[styles.walletBoxText]}>Total Unpaid Payout</Text>
+                                </View>
+                            </View>
+                            
+                            <View style={[theme.col6, theme.mb5]}>
+                                <View style={[styles.walletBox]}>
+                                    <Text style={[styles.walletPrice]}>{amountdata.paid}</Text>
                                     <Text style={[styles.walletBoxText]}>Total Paid Payout</Text>
                                 </View>
                             </View>
                             
+                           
+                            
                             
                         
-                            <View style={[theme.scol3]}>
-                                <View style={[styles.walletBox]}>
-                                    <Icon name='inr' style={[styles.inrIcon]}/>
-                                    <Text style={[styles.walletPrice]}>{unpaid}</Text>
-                                    <Text style={[styles.walletBoxText]}>Total Unpaid Payout</Text>
-                                </View>
-                            </View>
+                            
 
                         </View>
                         
@@ -134,6 +166,10 @@ export function EarningScreen({ navigation, extraData=[] }){
                             <TouchableOpacity style={theme.tabButton} onPress={() => selectType(5)} >
                                 <Text style={theme.tabButtonText}>Rank Bonus Income</Text>
                             </TouchableOpacity>
+
+                            <TouchableOpacity style={theme.tabButton} onPress={() => selectType(6)} >
+                                <Text style={theme.tabButtonText}>Repurchase Income</Text>
+                            </TouchableOpacity>
                         </ScrollView>
 
                     </View>
@@ -144,21 +180,14 @@ export function EarningScreen({ navigation, extraData=[] }){
                         renderItem={({ item }) => ( // Function to render each item
 
                                 <View style={[theme.cardRow, theme.row]}>
-                                    <View style={[theme.col8]}>
-                                        <Text style={[styles.txrDate]}>{item.package_payment_date_time}</Text>
-                                        {
-                                            item.payment==0?
-                                                <Text style={[theme.statusDanger]}>Unpaid</Text>
-                                            :item.payment==1?
-                                                <Text style={[theme.statusSuccess]}>Paid</Text>
-                                            :null
-                                        }
-                                        <RenderHtml
-                                            contentWidth={width}
-                                            source={{ html: item.message }} // Render HTML content
-                                        />
+                                    <View style={[theme.col12]}>
+                                        <Text style={[styles.txrDate]}>{item.add_date_time2}</Text>
+                                        <Text style={[styles.amountText]}>Amount: {item.amount}</Text>
+                                        <Text style={[styles.amountText]}>TDS: {item.tds_amount}</Text>
+                                        <Text style={[styles.amountText]}>R. Wallet: {item.wallet_amount}</Text>
+                                        <Text style={[styles.amountText]}>Final Amount: {item.final_amount}</Text>
+                                        <Text style={[theme.statusSuccess]}>{item.type_text}</Text>
                                     </View>
-                                    <View style={[theme.col4]}><Text style={[styles.amount, theme.textSuccess]}>{item.final_amount}</Text></View>
                                 </View>
                                           
                             )}
@@ -175,20 +204,19 @@ export function EarningScreen({ navigation, extraData=[] }){
                 }
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         />
-
-
-
-
-
-
-
-
-      
+     
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+    amountText:{
+        fontSize:15,
+        marginBottom:5,
+        justifyContent:'space-between',
+        display:'flex',
+        fontWeight:'bold'
+    },
     walletBoxRow:{
         flexDirection:'row',
         justifyContent:'space-between',
