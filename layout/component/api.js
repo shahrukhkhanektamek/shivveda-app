@@ -55,6 +55,10 @@ export const apiUrl = () => {
     "cartList":`${mainUrl}cart-list`,
     "cartAdd":`${mainUrl}cart-add`,
 
+    "useWallet":`${mainUrl}use-wallet`,
+    "checkoutCheck":`${mainUrl}checkout-check`,
+    "checkout":`${mainUrl}checkout`,
+
     "kycDetail":`${mainUrl}kyc-detail`,
 
   };

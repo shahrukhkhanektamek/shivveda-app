@@ -12,60 +12,47 @@ import {
 import PageHeader from '../../navBar/pageHeader';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { postData, apiUrl } from '../../component/api';
+import theme from '../../StyleSheet/theme';
 
 const urls = apiUrl();
 
 export function ProductsScreen({ navigation, extraData = [] }) {
     const [quantities, setQuantities] = useState({});
-    const [pId, setpId] = useState('');
-    const [qty, setqty] = useState('');
     const [data, setData] = useState([]);
     const [page, setPage] = useState(0);  
     const [refreshing, setRefreshing] = useState(false);
-    const [cartNotEmpty, setCartNotEmpty] = useState(0); // ✅ Track Cart Status
+    const [cartNotEmpty, setCartNotEmpty] = useState(0);
+    const [cartTotalBv, setCartTotalBv] = useState(0);
 
-    // 🛠️ Handle Increment
     const handleIncrement = (id) => {
-        setpId(id);
         setQuantities(prev => {
-            const newQuantity = (prev[id] || 0) + 1;
-            return { ...prev, [id]: newQuantity };
+            const currentQty = Number(prev[id]) || 0;
+            const newQuantity = currentQty + 1;
+            const updated = { ...prev, [id]: newQuantity };
+            handleAddCart(id, newQuantity);
+            return updated;
+        });
+    };
+    
+    const handleDecrement = (id) => {
+        setQuantities(prev => {
+            const currentQty = Number(prev[id]) || 0;
+            const newQuantity = currentQty > 0 ? currentQty - 1 : 0;
+            const updated = { ...prev, [id]: newQuantity };
+            handleAddCart(id, newQuantity);
+            return updated;
         });
     };
 
-    // 🛠️ Handle Decrement
-    const handleDecrement = (id) => {
-        setpId(id);
-        setQuantities(prev => {
-            const newQuantity = prev[id] > 0 ? prev[id] - 1 : 0;
-            return { ...prev, [id]: newQuantity };
-        });
-    }; 
-
-    
-
-    // ✅ `useEffect` to Call handleAddCart() AFTER qty Updates
-    useEffect(() => {
-        if (pId && quantities[pId] !== undefined) {
-            setqty(quantities[pId]);
-        }
-    }, [pId, quantities]);
-
-    useEffect(() => {
-        if (pId && qty !== '') {
-            handleAddCart();
-        }
-    }, [qty]);
-
-    // 🛠️ Handle Add to Cart
-    const handleAddCart = async () => { 
+    const handleAddCart = async (id, qty) => { 
         try {
-            if (qty !== '' && pId) {
-                const filedata = { id: pId, qty: qty };
+            if (qty !== '' && id) {
+                const filedata = { id, qty };
                 const response = await postData(filedata, urls.cartAdd, "POST", navigation, extraData);
                 if (response.status === 200) {
                     const cartData = response.data;
-                    setCartNotEmpty(cartData.cartDetail.cartCount); // ✅ Set Cart as Not Empty
+                    setCartNotEmpty(cartData.cartDetail?.cartCount || 0);
+                    setCartTotalBv(cartData.cartDetail?.totalBv)
                 }
             }
         } catch (error) {
@@ -73,48 +60,66 @@ export function ProductsScreen({ navigation, extraData = [] }) {
         }
     };
 
-    // 🛠️ Fetch Product List
-    const fetchData = async () => {
+    const checkoutCheck = async () => {
         try {
-            const response = await postData({}, urls.productList, "GET", navigation, extraData);
+            const response = await postData({}, urls.checkoutCheck, "POST", navigation, extraData);
             if (response.status === 200) {
-                setData(response.data.list);
-                const updatedQuantities = {};
-                data.forEach((pro) => {
-                    updatedQuantities[pro.id] = pro.qty;
-                });
-                setQuantities(updatedQuantities);
+                navigation.navigate("Checkout")
             } 
         } catch (error) {
             console.error("API call failed:", error);
         }
     };
 
-    // 🛠️ Refresh List
+    const fetchData = async () => {
+        try {
+            const response = await postData({}, urls.productList, "GET", navigation, extraData);
+            if (response.status === 200) {
+                const productList = response.data.list;
+                setData(productList);
+
+                const updatedQuantities = {};
+                productList.forEach((pro) => {
+                    updatedQuantities[pro.id] = pro.qty || 0;
+                });
+                setQuantities(updatedQuantities);
+
+                if (response.data.cartDetail) {
+                    setCartNotEmpty(response.data.cartDetail.cartCount || 0);
+                    setCartTotalBv(response.data.cartDetail?.totalBv)
+                }
+            } 
+        } catch (error) {
+            console.error("API call failed:", error);
+        }
+    };
+
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         fetchData().then(() => setRefreshing(false));
         setQuantities({});
-        setCartNotEmpty(0); // ✅ Reset Cart Status
     }, []);
 
     useEffect(() => {
         setQuantities({});
         fetchData();
     }, []);
-    const handleLoadMore = () => {
-      const nextPage = page + 1;
-      setPage(nextPage);
-      fetchData(nextPage);              
-  };
 
-    // 🛠️ Render Product Card
+    const handleLoadMore = () => {
+        const nextPage = page + 1;
+        setPage(nextPage);
+        fetchData(nextPage);              
+    };
+
     const renderProduct = ({ item }) => (
         <View style={styles.card}>
             <Image source={{ uri: item.image }} style={styles.image} />
             <View style={styles.details}>
                 <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.price}>{item.sale_price}</Text>
+                <Text style={styles.price}>DP: {item.sale_price}</Text>
+                <Text style={styles.price}>MRP: {item.real_price}</Text>
+                <Text style={styles.price}>BV: {item.bv}</Text>
+
                 <View style={styles.buttonGroup}>
                     <TouchableOpacity onPress={() => handleDecrement(item.id)} style={styles.button}>
                         <Icon name="minus" size={20} color="white" />
@@ -138,7 +143,7 @@ export function ProductsScreen({ navigation, extraData = [] }) {
             <FlatList
                 data={data}
                 renderItem={renderProduct}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item, index) => `${item.id}-${index}`}
                 contentContainerStyle={styles.list}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                 showsVerticalScrollIndicator={false}
@@ -146,25 +151,31 @@ export function ProductsScreen({ navigation, extraData = [] }) {
                 onEndReachedThreshold={0.5}
             />
             
-            {/* ✅ Show Cart Button When Cart is Not Empty */}
-            {cartNotEmpty!=0?
-                <TouchableOpacity style={styles.cartButton} onPress={() => navigation.navigate('Checkout')}>
-                    <Text style={styles.cartText}>Go to Cart</Text>
-                </TouchableOpacity>
-                :null
+            {cartNotEmpty !== 0 &&
+                <>
+                <View style={[theme.row, styles.cartButton]}>
+                    <View style={[theme.col8]}>
+                        <Text style={styles.bvText}>Total BV:<Text style={[styles.bvText]}>{cartTotalBv}</Text></Text>
+                    </View>
+                    <View style={[theme.col4]}>
+                        <TouchableOpacity  onPress={checkoutCheck}>
+                            <Text style={styles.cartText}>Go to Cart</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                </>
             }
         </View>
     );
 }
 
-// 🛠️ Styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f2f2f2',
     },
     list: {
-        paddingBottom: 80, // ✅ Adjust to Prevent Overlapping with Cart Button
+        paddingBottom: 80,
     },
     card: {
         flexDirection: 'row',
@@ -203,6 +214,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignSelf: 'flex-start',
         overflow: 'hidden',
+        marginBottom: 4
     },
     buttonGroup: {
         flexDirection: 'row',
@@ -230,20 +242,27 @@ const styles = StyleSheet.create({
     },
     cartButton: {
         position: 'absolute',
-        bottom: 20,
-        left: 20,
-        right: 20,
-        backgroundColor: '#e74c3c',
-        padding: 15,
-        borderRadius: 30,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#4cb748',
+        padding: 10,
+        borderRadius: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        elevation: 5,
+        elevation: 1,
     },
     cartText: {
-        color: '#fff',
+        color: 'white',
         fontSize: 18,
         fontWeight: 'bold',
+        textAlign:'right',
+    },
+    bvText: {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign:'left',
     },
 });
 

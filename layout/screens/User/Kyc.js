@@ -40,6 +40,10 @@ export function KycScreen({ navigation, extraData=[] }){
   const [selectedAccountType, setSelectedAccountType] = useState();
   const [kycStatus, setkycStatus] = useState();
   const [bank_holder_name, setbank_holder_name] = useState();
+
+  const [father_name, setfather_name] = useState();
+  const [nomani_relation, setnomani_relation] = useState();
+
   const [nomani, setnomani] = useState();
   const [bank_name, setbank_name] = useState();
   const [account_number, setaccount_number] = useState();
@@ -59,6 +63,8 @@ export function KycScreen({ navigation, extraData=[] }){
   let filedata = {
       "bank_holder_name":bank_holder_name,
       "nomani":nomani,
+      "father_name":father_name,
+      "nomani_relation":nomani_relation,
       "bank_name":bank_name,
       "account_number":account_number,
       "account_type":selectedAccountType,
@@ -209,6 +215,9 @@ export function KycScreen({ navigation, extraData=[] }){
           setaddress(data.bank_holder_name);
           setSelectedAccountType(data.account_type);
 
+          setfather_name(data.father_name);
+          setnomani_relation(data.nomani_relation);
+
           setbankPassbook(data.passbook_image);
           setpanCard(data.pancard_image);
           setaadharfrontImage(data.aadharfront_image);
@@ -291,8 +300,7 @@ export function KycScreen({ navigation, extraData=[] }){
 
                 
                             
-                <View style={[theme.col12]}>
-                    
+                <View style={[theme.col6]}>                    
                     <View style={theme.inputContainer}>
                     <Icon name="user" size={20} style={theme.inputIcon} />
                     <TextInput
@@ -305,18 +313,46 @@ export function KycScreen({ navigation, extraData=[] }){
                     </View>
                 </View>
 
-                <View style={[theme.col12]}>
+                <View style={[theme.col6]}>
                     <View style={theme.inputContainer}>
                     <Icon name="user" size={20} style={theme.inputIcon} />
                     <TextInput
                         style={theme.input}
-                        placeholder="Your nomani Name"
+                        placeholder="Your Father Name"
+                        placeholderTextColor="#999"
+                        value={father_name}
+                        onChangeText={setfather_name}
+                    />
+                    </View>
+                </View>
+
+                <View style={[theme.col6]}>
+                    <View style={theme.inputContainer}>
+                    <Icon name="user" size={20} style={theme.inputIcon} />
+                    <TextInput
+                        style={theme.input}
+                        placeholder="Your Nomani Name"
                         placeholderTextColor="#999"
                         value={nomani}
                         onChangeText={setnomani}
                     />
                     </View>
                 </View>
+
+                <View style={[theme.col6]}>
+                    <View style={theme.inputContainer}>
+                    <Icon name="user" size={20} style={theme.inputIcon} />
+                    <TextInput
+                        style={theme.input}
+                        placeholder="Your Nomani Relation"
+                        placeholderTextColor="#999"
+                        value={nomani_relation}
+                        onChangeText={setnomani_relation}
+                    />
+                    </View>
+                </View>
+
+                
 
                 <View style={[theme.col6]}>
                     <View style={theme.inputContainer}>
