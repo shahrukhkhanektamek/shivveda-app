@@ -17,7 +17,7 @@ import StatePicker from '../../component/StatePicker';
 import PageHeader from '../../navBar/pageHeader';
 import { postData, apiUrl, convertToBase64 } from '../../component/api';
 import theme from '../../StyleSheet/theme';
-
+import PageLoding from '../../component/PageLoding';
 const urls = apiUrl();
 
 import { MMKV } from 'react-native-mmkv';
@@ -52,6 +52,8 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
 
   const [useWallet, setUseWallet] = useState(false);
   const [payment_mode, setpayment_mode] = useState(0);
+
+  const [isLoading, setisLoading] = useState(true);
 
   const handleWalletToggle = () => {
     setUseWallet(!useWallet);
@@ -97,6 +99,7 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
         setupi(response.upi)
         setupiUrl(response.upiUrl)
       }
+      setisLoading(false)
     } catch (error) {
       console.error("Cart API Error:", error);
     }
@@ -131,6 +134,7 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
         Alert.alert("Success", "Your order has been placed successfully!");
         navigation.navigate("Home");
       }
+      
     } catch (error) {
       console.error("Order API Error:", error);
     }
@@ -149,6 +153,13 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
     Alert.alert("Submitted", "Payment screenshot submitted!");
     setModalVisible(false);
   };
+
+  if (isLoading) {
+    return ( 
+        <PageLoding />          
+    );
+  }
+
 
   return (
     <View style={styles.container}>

@@ -13,7 +13,7 @@ import PageHeader from '../../navBar/pageHeader';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { postData, apiUrl } from '../../component/api';
 import theme from '../../StyleSheet/theme';
-
+import PageLoding from '../../component/PageLoding';
 const urls = apiUrl();
 
 export function ProductsScreen({ navigation, extraData = [] }) {
@@ -23,6 +23,7 @@ export function ProductsScreen({ navigation, extraData = [] }) {
     const [refreshing, setRefreshing] = useState(false);
     const [cartNotEmpty, setCartNotEmpty] = useState(0);
     const [cartTotalBv, setCartTotalBv] = useState(0);
+    const [isLoading, setisLoading] = useState(true);
 
     const handleIncrement = (id) => {
         setQuantities(prev => {
@@ -77,18 +78,19 @@ export function ProductsScreen({ navigation, extraData = [] }) {
             if (response.status === 200) {
                 const productList = response.data.list;
                 setData(productList);
-
+                
                 const updatedQuantities = {};
                 productList.forEach((pro) => {
                     updatedQuantities[pro.id] = pro.qty || 0;
                 });
                 setQuantities(updatedQuantities);
-
+                
                 if (response.data.cartDetail) {
                     setCartNotEmpty(response.data.cartDetail.cartCount || 0);
                     setCartTotalBv(response.data.cartDetail?.totalBv)
                 }
             } 
+            setisLoading(false)
         } catch (error) {
             console.error("API call failed:", error);
         }
@@ -110,6 +112,14 @@ export function ProductsScreen({ navigation, extraData = [] }) {
         setPage(nextPage);
         fetchData(nextPage);              
     };
+
+
+    if (isLoading) {
+        return ( 
+            <PageLoding />          
+        );
+      }
+    
 
     const renderProduct = ({ item }) => (
         <View style={styles.card}>

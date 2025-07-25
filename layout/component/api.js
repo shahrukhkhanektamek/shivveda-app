@@ -10,8 +10,8 @@ const storage = new MMKV();
 
 
 export const apiUrl = () => {
-  // const mainUrl = 'http://192.168.1.42/projects/irshad/ayurvedicmlm/api/user/';  
-  const mainUrl = 'https://shivveda.in/api/user/';  
+  const mainUrl = 'http://192.168.1.61/projects/irshad/shivveda.in/api/user/';   
+  // const mainUrl = 'https://shivveda.in/api/user/';  
   return {
     "login":`${mainUrl}login`,
     "registerOtpSend":`${mainUrl}register-otp-send`,
@@ -40,6 +40,7 @@ export const apiUrl = () => {
     "supportLsit":`${mainUrl}support-list`,
     "supportAdd":`${mainUrl}support-add`,
     "earningList":`${mainUrl}earning-list`,
+    "lavelEarningList":`${mainUrl}lavel-earning-list`,
     "depositList":`${mainUrl}deposit-list`,
     "depositAdd":`${mainUrl}deposit-add`,
     "depositSubmit":`${mainUrl}deposit-submit`,
@@ -54,6 +55,10 @@ export const apiUrl = () => {
 
     "cartList":`${mainUrl}cart-list`,
     "cartAdd":`${mainUrl}cart-add`,
+    
+    "orderList":`${mainUrl}my-order`,
+    "orderDetail":`${mainUrl}my-order-detail`,
+
 
     "useWallet":`${mainUrl}use-wallet`,
     "checkoutCheck":`${mainUrl}checkout-check`,
@@ -102,22 +107,24 @@ export const postData = async (filedata, url, method, navigation, extraData) => 
 };
 
 const responseCheck = async (response, navigation, extraData) => {
+
+  
   try {
-
-    let result = [];
-    if(response.status==200 || response.status==400) 
-    {
-      result = await response.json();      
-    } 
-    else{
-      result = response; 
-    }
-    console.log("Response:", result); 
-    extraData.loader.setShowLoader(false);
     
+    let result = [];
+    if(response.status==200 || response.status==400 || response.status==401) 
+      {
+        result = await response.json();      
+      } 
+      else{ 
+        result = response; 
+      }
+      console.log("Response:", result); 
+    extraData.loader.setShowLoader(false);
+     
 
 
-
+ 
 
 
     if (result.status === 200) {
@@ -188,11 +195,11 @@ const responseCheck = async (response, navigation, extraData) => {
       } 
       else if (result.status === 401) {
         // showSuccessMessage(result.message, extraData, 0);
-        storage.delete('token');
         navigation.reset({
           index: 0,
           routes: [{ name: 'Login' }],
         });
+        storage.delete('token');
       } 
       else if (result.status === 419) {
         refreshScreen();

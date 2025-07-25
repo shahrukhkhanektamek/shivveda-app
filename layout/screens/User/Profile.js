@@ -21,6 +21,8 @@ import GradientStyles from '../../StyleSheet/GradientStyles';
 import CountryPicker from '../../component/CountryPicker';
 import StatePicker from '../../component/StatePicker';
 
+import PageLoding from '../../component/PageLoding';
+
 import { postData, apiUrl } from '../../component/api';
 const urls=apiUrl();
 
@@ -40,7 +42,7 @@ export function ProfileScreen({ navigation, extraData=[] }){
   const [address, setaddress] = useState();
   const [city, setcity] = useState();
   const [user_id, setuser_id] = useState();
-  
+  const [isLoading, setisLoading] = useState(true);
 
 
   const handleSubmit = async () => {  
@@ -65,6 +67,7 @@ export function ProfileScreen({ navigation, extraData=[] }){
                 const data = response.data;
                 setData(data);
             }
+            
         } catch (error) {
             console.error("API call failed:", error);
         }
@@ -88,6 +91,7 @@ export function ProfileScreen({ navigation, extraData=[] }){
           setSelectedState(data.state)
           setcity(data.city)
           setuser_id(data.user_id)
+          setisLoading(false)
         } 
       } catch (error) {
         console.error("API call failed:", error);
@@ -107,6 +111,11 @@ export function ProfileScreen({ navigation, extraData=[] }){
 
 
 
+  if (isLoading) {
+    return ( 
+        <PageLoding />          
+    );
+  }
 
 
   

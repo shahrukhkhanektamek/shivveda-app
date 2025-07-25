@@ -156,7 +156,7 @@ const SideBar = ({ navigation, extraData = [] }) => {
                       <TouchableOpacity style={styles.subMenuItem} onPress={() => navigation.navigate("Order")}>
                         <Text style={styles.menuTextLabel}>My Orders</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.subMenuItem} onPress={() => navigation.navigate("RepurchaseBusiness")}>
+                      <TouchableOpacity style={styles.subMenuItem} onPress={() => navigation.navigate("LavelEarning")}>
                         <Text style={styles.menuTextLabel}>Repurchase Business</Text>
                       </TouchableOpacity>
                     </View>
@@ -231,13 +231,13 @@ const SideBar = ({ navigation, extraData = [] }) => {
             </TouchableOpacity>
             <View style={styles.divider} />
 
-            <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("ReminderList")}>
+            {/* <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("ReminderList")}>
               <View style={styles.menuIcon}>
                 <Icon name="gift" style={[theme.sideBarIconColor]} />
               </View>
               <Text style={styles.menuTextLabel}>Reward & Gift</Text>
             </TouchableOpacity>
-            <View style={styles.divider} />
+            <View style={styles.divider} /> */}
 
             <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("Support")}>
               <View style={styles.menuIcon}>

@@ -15,7 +15,7 @@ import theme from '../../StyleSheet/theme';
 
 import PageHeader from '../../navBar/pageHeader';
 import RenderHtml from 'react-native-render-html';
-
+import PageLoding from '../../component/PageLoding';
 import { postData, apiUrl } from '../../component/api';
 const urls=apiUrl();
 
@@ -32,27 +32,30 @@ export function EarningScreen({ navigation, extraData=[] }){
     const [amountdata, setamountData] = useState([]);
     const [page, setPage] = useState(0);
     const [refreshing, setRefreshing] = useState(false);
-    const fetchData = async (pagep) => {
+    const [isLoading, setisLoading] = useState(true);
+
+    const fetchData = async (pagep, typep) => {
         try {
-            const response = await postData({"page":pagep,"type":type}, urls.earningList, "GET", navigation, extraData);
+            const response = await postData({"page":pagep,"type":typep}, urls.earningList, "GET", navigation, extraData);
             if(response.status==200)
             {
-            const data = response.data.list; 
-            setamountData(response.data);
-            setData(prevData => pagep === 0 ? data : [...prevData, ...data]);
+                const data = response.data.list; 
+                setamountData(response.data);
+                setData(prevData => pagep === 0 ? data : [...prevData, ...data]);
 
-            setpaid(response.data.paid);
-            setunpaid(response.data.unPaid);
+                setpaid(response.data.paid);
+                setunpaid(response.data.unPaid);
             } 
+            setisLoading(false)
         } catch (error) {
             console.error("API call failed:", error);
         }
     };
 
-    const selectType = (type) => {
-        settype(type);
+    const selectType = (newtype) => {
+        settype(newtype);
         setPage(0);
-        fetchData(page)
+        // fetchData(page, newtype)
     };
 
     const onRefresh = useCallback(() => {
@@ -60,18 +63,24 @@ export function EarningScreen({ navigation, extraData=[] }){
         settype('')
         setRefreshing(true);
         setRefreshing(false);
-        fetchData(page)
+        fetchData(page, type)
     }, []);
     useEffect(() => {
-        fetchData(page);
-    }, []);
+        fetchData(page, type);
+    }, [page, type]);
     const handleLoadMore = () => {
         const nextPage = page + 1;
         setPage(nextPage);
-        fetchData(nextPage);              
+        // fetchData(nextPage, type);
     };
 
-
+    if (isLoading) {
+        return ( 
+            <PageLoding />          
+        );
+      }
+    
+    
 
 
   return (

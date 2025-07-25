@@ -20,7 +20,7 @@ import GradientStyles from '../../StyleSheet/GradientStyles';
 
 
 import AccounTypePicker from '../../component/AccounTypePicker';
-
+import PageLoding from '../../component/PageLoding';
 import { postData, apiUrl, convertToBase64 } from '../../component/api';
 const urls=apiUrl();
 
@@ -58,7 +58,7 @@ export function KycScreen({ navigation, extraData=[] }){
   const [panCard, setpanCard] = useState('');
   const [aadharfrontImage, setaadharfrontImage] = useState('');
   const [aadharbackImage, setaadharbackImage] = useState('');
-
+  const [isLoading, setisLoading] = useState(true);
 
   let filedata = {
       "bank_holder_name":bank_holder_name,
@@ -224,6 +224,7 @@ export function KycScreen({ navigation, extraData=[] }){
           setaadharbackImage(data.aadharback_image);
                 
         } 
+        setisLoading(false)
       } catch (error) {
         console.error("API call failed:", error);
       }
@@ -240,6 +241,12 @@ export function KycScreen({ navigation, extraData=[] }){
       fetchData();
   };
 
+
+  if (isLoading) {
+    return ( 
+        <PageLoding />          
+    );
+  }
 
 
 

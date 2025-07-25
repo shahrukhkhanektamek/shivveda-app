@@ -285,7 +285,7 @@ export function HomeScreen({ navigation, extraData = [] }) {
 
 
               <View style={[theme.card, styles.cardBg]}>
-                <View style={[theme.cardHeader]} backgroundColor={'green'}>
+                <View style={[theme.cardHeader]} backgroundColor={'#00ab55'}>
                   <Text style={[theme.cardHeaderText]}>Left Joining Link</Text>
                 </View>
                 <View style={[theme.cardBody]}>
@@ -310,7 +310,7 @@ export function HomeScreen({ navigation, extraData = [] }) {
 
 
               <View style={[theme.card, styles.cardBg]}>
-                <View style={[theme.cardHeader]} backgroundColor={'green'}>
+                <View style={[theme.cardHeader]} backgroundColor={'#00ab55'}>
                   <Text style={[theme.cardHeaderText]}>Right Joining Link</Text>
                 </View>
                 <View style={[theme.cardBody]}>
@@ -335,7 +335,7 @@ export function HomeScreen({ navigation, extraData = [] }) {
 
 
               <View style={[theme.card, styles.cardBg]}>
-                <View style={[theme.cardHeader]} backgroundColor={'green'}>
+                <View style={[theme.cardHeader]} backgroundColor={'#00ab55'}>
                   <Text style={[theme.cardHeaderText]}>Rank List</Text>
                 </View>
                 <View style={[theme.cardBody]}>
@@ -406,7 +406,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   totalIncome: {
-    backgroundColor: 'red',
+    backgroundColor: '#55b752',
     paddingHorizontal: 10,
     color: 'white',
     borderRadius: 5,
@@ -415,7 +415,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   todayIncome: {
-    backgroundColor: 'red',
+    backgroundColor: '#55b752',
     paddingHorizontal: 10,
     color: 'white',
     borderRadius: 5,
@@ -442,7 +442,7 @@ const styles = StyleSheet.create({
     width: '50%',
     fontSize: 15,
     fontWeight: 'bold',
-    color: '#5D4037'
+    color: 'white'
   },
   cardRightText: {
     width: '50%',
@@ -497,7 +497,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 15,
     fontWeight: '900',
-    backgroundColor: 'red',
+    backgroundColor: '#FF6666',
     color: 'white',
     padding: 5,
     marginTop: 10

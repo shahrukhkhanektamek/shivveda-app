@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import theme from '../../../StyleSheet/theme';
-
+import PageLoding from '../../../component/PageLoding';
 
 import { postData, apiUrl } from '../../../component/api';
 const urls = apiUrl();
@@ -25,6 +25,8 @@ export function AllSupportScreen({ navigation, route }){
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
+  const [isLoading, setisLoading] = useState(true);
+
   const fetchData = async (pagep) => {
       try {
         const response = await postData({"page":pagep}, urls.supportLsit, "GET", navigation, extraData);
@@ -33,6 +35,7 @@ export function AllSupportScreen({ navigation, route }){
           const data = response.data; 
           setData(prevData => pagep === 0 ? data : [...prevData, ...data]);
         } 
+        setisLoading(false)
       } catch (error) {
         console.error("API call failed:", error);
       }
@@ -51,6 +54,12 @@ export function AllSupportScreen({ navigation, route }){
       setPage(nextPage);
       fetchData(nextPage);              
   };
+
+  if (isLoading) {
+    return ( 
+        <PageLoding />          
+    );
+  }
 
 
 

@@ -65,7 +65,7 @@ export function SettingScreen ({ navigation, extraData=[] }){
               </View>
 
               {/* More Options Section */}
-              <View style={styles.section}>
+              {/* <View style={styles.section}>
                 
                 <View style={styles.toggleRow}>
                   <Text style={styles.optionText}>Notification</Text>
@@ -78,7 +78,7 @@ export function SettingScreen ({ navigation, extraData=[] }){
                 </View>
                 
                 
-              </View>
+              </View> */}
           
         </ScrollView>
 

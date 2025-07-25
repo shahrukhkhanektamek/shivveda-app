@@ -35,11 +35,15 @@ import { WalletScreen } from './layout/screens/User/WalletScreen';
 import { WithdrawalScreen } from './layout/screens/User/WithdrawalScreen';
 import { EarningScreen } from './layout/screens/User/EarningScreen';
 
+import { LavelEarningScreen } from './layout/screens/User/LavelEarningScreen';
+
+
 // support
 import { SupportScreen } from './layout/screens/User/Support/SupportScreen';
 
 // order
 import { OrderScreen } from './layout/screens/User/Order/OrderScreen';
+import { OrderDetailScreen } from './layout/screens/User/Order/OrderDetailScreen';
 
 import { ProductsScreen } from './layout/screens/User/Products';
 import { CheckoutScreen } from './layout/screens/User/Checkout';
@@ -216,6 +220,14 @@ function App() {
           )}
         </Stack.Screen>
 
+        <Stack.Screen name="LavelEarning">
+          {props => (
+            <NormalScreen {...props}> 
+              <LavelEarningScreen {...props} />
+            </NormalScreen>
+          )}
+        </Stack.Screen>
+
         <Stack.Screen name="Support">
           {props => (
             <NormalScreen {...props}> 
@@ -228,6 +240,14 @@ function App() {
           {props => (
             <NormalScreen {...props}> 
               <OrderScreen {...props} />
+            </NormalScreen>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="OrderDetail">
+          {props => (
+            <NormalScreen {...props}> 
+              <OrderDetailScreen {...props} />
             </NormalScreen>
           )}
         </Stack.Screen>

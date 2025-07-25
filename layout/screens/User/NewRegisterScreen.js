@@ -16,7 +16,7 @@ import PageHeader from '../../navBar/pageHeader';
 import LinearGradient from 'react-native-linear-gradient';
 import GradientStyles from '../../StyleSheet/GradientStyles';
 
-import { postData, apiUrl } from '../../component/api';
+import { postData, apiUrl, showSuccessMessage } from '../../component/api';
 const urls=apiUrl();
 
 import CountryPicker from '../../component/CountryPicker';
@@ -58,6 +58,16 @@ export function NewRegisterScreen({ navigation, extraData=[] }){
         "password":password,
         "confirm_password":cpassword
     };
+
+    console.log(sponser_id)
+    if(!sponser_id) showSuccessMessage("Wrong Sponser ID", extraData, 0);
+    else if(!name) showSuccessMessage("Enter Name", extraData, 0);
+    else if(!phone) showSuccessMessage("Enter Phone", extraData, 0);
+    else if(!password) showSuccessMessage("Enter Password", extraData, 0);
+    else if(!confirm_password) showSuccessMessage("Enter Confirm Password", extraData, 0);
+
+    return false;
+
     const response = await postData(filedata, urls.newRegister,"POST", navigation,extraData);
     if(response.status==200)
     {
