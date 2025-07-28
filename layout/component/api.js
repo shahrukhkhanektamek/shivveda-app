@@ -10,8 +10,8 @@ const storage = new MMKV();
 
 
 export const apiUrl = () => {
-  const mainUrl = 'http://192.168.1.61/projects/irshad/shivveda.in/api/user/';   
-  // const mainUrl = 'https://shivveda.in/api/user/';  
+  // const mainUrl = 'http://192.168.1.61/projects/irshad/shivveda.in/api/user/';   
+  const mainUrl = 'https://shivveda.in/api/user/';  
   return {
     "login":`${mainUrl}login`,
     "registerOtpSend":`${mainUrl}register-otp-send`,
@@ -153,6 +153,15 @@ const responseCheck = async (response, navigation, extraData) => {
             routes: [{ name: 'Home' }], 
           });
           return;
+
+          case "placeOrder":
+          showSuccessMessage(result.message, extraData, 1);
+          storeLoginToken(result);
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }], 
+          });
+          return result;
           
           case "logout":
           showSuccessMessage(result.message, extraData, 1);

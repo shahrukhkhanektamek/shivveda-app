@@ -108,14 +108,15 @@ export function HomeScreen({ navigation, extraData = [] }) {
                 <View style={[theme.alertBox, theme.alertDanger, theme.mt20]}>
                   <Icon name="exclamation-circle" size={24} color="#FFA500" />
                   <View style={theme.alerttextContainer}>
-                    <Text style={[theme.alertText]} >Your id not active yet.</Text>
-                    {/* <Text style={theme.alertsubText}>Your profile is incomplete.</Text> */}
+                    <Text style={[theme.alertText]} >
+                    Purchase any products and complete your {data.idBv} BV You have {data.userBv} bv now
+                      Your id not active yet.</Text>
                   </View>
-                  <TouchableOpacity style={theme.alertbutton} onPress={()=> navigation.navigate("DepositList")}>
-                    <Text style={theme.alertbuttonText}>Make Payment</Text>
+                  <TouchableOpacity style={theme.alertbutton} onPress={()=> navigation.navigate("Products")}>
+                    <Text style={theme.alertbuttonText}>Ckick Here</Text>
                   </TouchableOpacity>
                 </View>
-            :user.kyc_step!=1?
+            :user.kyc_step!=1?  
 
                 <View style={[theme.alertBox, theme.alertDanger, theme.mt20]}>
                   <Icon name="exclamation-circle" size={24} color="#FFA500" />

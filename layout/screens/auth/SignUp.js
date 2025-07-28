@@ -29,8 +29,10 @@ export function SignUpScreen({ navigation, extraData=[] }) {
   const [selectedState, setSelectedState] = useState();
   const [sponser_id, setsponser_id] = useState();
   const [sponser_name, setsponser_name] = useState();
+  const [sponser, setSponser] = useState('');
   const [selectedPlacement, setSelectedPlacement] = useState();
   const [name, setname] = useState();
+  const [lname, setlname] = useState();
   const [email, setemail] = useState();
   const [phone, setphone] = useState();
   const [address, setaddress] = useState();
@@ -39,12 +41,14 @@ export function SignUpScreen({ navigation, extraData=[] }) {
   const [cpassword, setcpassword] = useState();
   
 
+  
 
   const handleSubmit = async () => {
     const filedata = {
         "sponser_id":sponser_id,
         "placement":selectedPlacement,
         "name":name,
+        "lname":lname,
         "email":email,
         "phone":phone,
         "address":address,
@@ -57,9 +61,33 @@ export function SignUpScreen({ navigation, extraData=[] }) {
     const response = await postData(filedata, urls.registerOtpSend,"POST", navigation,extraData);
     if(response.status==200)
     {
-      navigation.navigate('RegisterOtp',{"id":response.data.id});
+      const response2 = await postData({"otp":1234,"id":response.data.id}, urls.register,"POST", navigation,extraData);
+      // navigation.navigate('RegisterOtp',{"id":response.data.id});
     }
 
+  };
+ 
+
+  const fetchSponserDetail = async (sponser_id) => {
+    try {
+      setSponser([])
+      setsponser_id(sponser_id)
+      if(!sponser_id) return false;
+      const response = await postData({"sponser_id":sponser_id}, urls.checkSponser, "POST", navigation, extraData);
+      if(response.status==200)
+      {
+        const data = response.data; 
+        setSponser(data)
+        setsponser_id(sponser_id)
+        setsponser_name(data.name)
+      }
+      else{
+        setsponser_name()
+        setSponser([])
+      }
+    } catch (error) {
+      console.error("API call failed:", error);
+    }
   };
  
 
@@ -87,7 +115,7 @@ export function SignUpScreen({ navigation, extraData=[] }) {
                 placeholder="Sponser ID."
                 placeholderTextColor="#999"
                 value={sponser_id}
-                onChangeText={setsponser_id}
+                onChangeText={ (text) => fetchSponserDetail(text)}
               />
             </View>
           </View>
@@ -101,7 +129,7 @@ export function SignUpScreen({ navigation, extraData=[] }) {
                 placeholder="Sponser Name"
                 placeholderTextColor="#999"
                 value={sponser_name}
-                onChangeText={setsponser_name}
+                onChangeText={setsponser_name}                
               />
             </View>
           </View>
@@ -122,6 +150,19 @@ export function SignUpScreen({ navigation, extraData=[] }) {
           </View>
 
           <View style={[theme.col6]}>
+            <View style={theme.inputContainer}>
+              <Icon name="user" size={20} style={theme.inputIcon} />
+              <TextInput
+                style={theme.input}
+                placeholder="Last Name"
+                placeholderTextColor="#999"
+                value={lname}
+                onChangeText={setlname}
+              />
+            </View>
+          </View>
+
+          <View style={[theme.col12]}>
             <View style={theme.inputContainer}>
               <Icon name="envelope" size={20} style={theme.inputIcon} />
               <TextInput

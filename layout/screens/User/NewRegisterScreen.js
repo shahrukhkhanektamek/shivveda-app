@@ -59,7 +59,7 @@ export function NewRegisterScreen({ navigation, extraData=[] }){
         "confirm_password":cpassword
     };
 
-    console.log(sponser_id)
+    
     if(!sponser_id) showSuccessMessage("Wrong Sponser ID", extraData, 0);
     else if(!name) showSuccessMessage("Enter Name", extraData, 0);
     else if(!phone) showSuccessMessage("Enter Phone", extraData, 0);

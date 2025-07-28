@@ -34,6 +34,7 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
   const [cartDetail, setcartDetail] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [walletUseAmount, setwalletUseAmount] = useState(0);
+  const [walletAmount, setwalletAmount] = useState(0);
   const [payAbleAmount, setpayAbleAmount] = useState(0);
   const [payable_amount_int, setpayable_amount_int] = useState(0);
   const [qrcode, setqrcode] = useState(0);
@@ -142,13 +143,7 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
 
 
 
-  const handleImagePick = () => {
-    launchImageLibrary({ mediaType: 'photo' }, (response) => {
-      if (response.assets && response.assets.length > 0) {
-        setSelectedImage(response.assets[0].uri);
-      }
-    });
-  };
+
   const handleModalSubmit = () => {
     Alert.alert("Submitted", "Payment screenshot submitted!");
     setModalVisible(false);
@@ -165,7 +160,24 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
     <View style={styles.container}>
       <PageHeader pageTitle="Checkout" navigation={navigation} />
 
+      
+
       <ScrollView contentContainerStyle={styles.list}>
+
+      {userDetail?.is_paid && (
+          <View style={[theme.card]}>
+            <View style={[theme.cardBody, theme.row]}>
+                
+                <View style={[theme.col6, theme.mb5]}>
+                    <View style={[styles.walletBox]}>
+                        <Text style={[styles.walletPrice]}>{walletAmount}</Text>
+                        <Text style={[styles.walletBoxText]}>Wallet Amount</Text>
+                    </View>
+                </View>
+              </View>
+          </View>
+      )}
+
         {cartItems.map((item) => (
           <View key={item.id.toString()} style={styles.card}>
             <Image source={{ uri: item.image }} style={styles.image} />
@@ -209,7 +221,7 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
                 )} 
             </View>
 
-            {/* <Text style={styles.totalBV}>Total BV: {cartDetail.totalBv}</Text> */}
+            <Text style={styles.totalBV}>Total BV: {cartDetail.totalBv}</Text>
 
             {userDetail?.is_paid && (
             <TouchableOpacity
@@ -467,6 +479,51 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
+
+ 
+  amountText:{
+      fontSize:15,
+      marginBottom:5,
+      justifyContent:'space-between',
+      display:'flex',
+      fontWeight:'bold'
+  },
+  walletBoxRow:{
+      flexDirection:'row',
+      justifyContent:'space-between',
+      alignItems:'center',
+      textAlign:'center'
+  },
+  walletBox:{
+      borderWidth:1,
+      padding:10,
+      borderRadius:5,
+  },
+  inrIcon:{
+      fontSize:20,
+      fontWeight:'bold',
+      textAlign:'center',
+  },
+  walletPrice:{
+      fontSize:20,
+      fontWeight:'bold',
+      textAlign:'center',
+  },
+  walletBoxText:{
+      fontSize:17,
+      fontWeight:'bold',
+      textAlign:'center',
+  },
+  textDeviderPlus:{
+      fontSize:50,
+      fontWeight:'bold',
+      textAlign:'center',
+  },
+  amount:{
+      textAlign:'right'
+  }
+
+
 
 });
 

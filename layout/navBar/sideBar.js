@@ -24,6 +24,8 @@ const SideBar = ({ navigation, extraData = [] }) => {
   const setSideBar = extraData.sidebar.setSideBar;
   const showSideBar = extraData.sidebar.showSideBar;
 
+  // console.log(userDetail);
+
   const [expandedMenus, setExpandedMenus] = useState({});
 
   const toggleSubmenu = (menuKey) => {

@@ -152,19 +152,6 @@ export function ProfileScreen({ navigation, extraData=[] }){
                   </View>
               </View>
 
-              {data.kyc_step!=1?              
-                <View style={theme.alertBox}>
-                  <Icon name="exclamation-circle" size={24} color="#FFA500" />
-                  <View style={theme.alerttextContainer}>
-                    <Text style={theme.alertText}>Complete your KYC to unlock all features.</Text>
-                    <Text style={theme.alertsubText}>Your profile is incomplete.</Text>
-                  </View>
-                  <TouchableOpacity  style={theme.alertbutton} onPress={() => navigation.navigate('Kyc')}>
-                    <Text style={theme.alertbuttonText}>Complete KYC</Text>
-                  </TouchableOpacity>
-                </View>
-                :null
-              }
 
               
           </View>
