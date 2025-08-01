@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import PageHeader from '../../../navBar/pageHeader';
 import { TreeScreen } from './TreeScreen';
@@ -8,25 +8,31 @@ import { RightTeamScreen } from './RightTeamScreen';
 import { DirectTeamScreen } from './DirectTeamScreen';
 
 const Tab = createMaterialTopTabNavigator();
+const screenWidth = Dimensions.get('window').width;
 
-export function TeamScreen({ navigation, extraData=[] }) {
-
-
+export function TeamScreen({ navigation, extraData = [] }) {
   return (
     <View style={{ flex: 1 }}>
+      {/* Header Section */}
       <PageHeader pageTitle="Team" navigation={navigation} />
-      <Tab.Navigator
-        screenOptions={{
-          tabBarStyle: styles.tabBar,
-          tabBarLabelStyle: styles.tabLabel,
-          tabBarIndicatorStyle: styles.tabIndicator,
-        }}
-      >
-        <Tab.Screen name="Tree" component={TreeScreen} initialParams={{ extraData }} />
-        <Tab.Screen name="Direct Team" component={DirectTeamScreen} initialParams={{ extraData }} />
-        <Tab.Screen name="Left Team" component={LeftTeamScreen} initialParams={{ extraData }} />
-        <Tab.Screen name="Right Team" component={RightTeamScreen} initialParams={{ extraData }} />
-      </Tab.Navigator>
+
+      {/* Tabs Section */}
+      <View style={{ flex: 1 }}>
+        <Tab.Navigator
+          initialLayout={{ width: screenWidth }} // ✅ Ensures tab width is known for correct indicator behavior
+          screenOptions={{
+            swipeEnabled: false, // ✅ Prevent swipe tab change
+            tabBarStyle: styles.tabBar,
+            tabBarLabelStyle: styles.tabLabel,
+            tabBarIndicatorStyle: styles.tabIndicator,
+          }}
+        >
+          <Tab.Screen name="Tree" component={TreeScreen} initialParams={{ extraData }} />
+          <Tab.Screen name="Direct Team" component={DirectTeamScreen} initialParams={{ extraData }} />
+          <Tab.Screen name="Left Team" component={LeftTeamScreen} initialParams={{ extraData }} />
+          <Tab.Screen name="Right Team" component={RightTeamScreen} initialParams={{ extraData }} />
+        </Tab.Navigator>
+      </View>
     </View>
   );
 }
@@ -46,5 +52,3 @@ const styles = StyleSheet.create({
     height: 3,
   },
 });
-
-

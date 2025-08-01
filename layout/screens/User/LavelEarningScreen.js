@@ -125,7 +125,7 @@ export function LavelEarningScreen({ navigation, extraData=[] }){
         {data.map((item) => (
           <React.Fragment key={item.id}>
             {(level==0) ? ( 
-               <TouchableOpacity
+               <TouchableOpacity key={item.key}
                   style={styles.cell}
                   onPress={() => selectLevel(item.key)}
                 >
@@ -141,7 +141,7 @@ export function LavelEarningScreen({ navigation, extraData=[] }){
                     </View>
                 </TouchableOpacity>
             ): (
-               <View>
+               <View key={item.key}>
                     <View style={[theme.cardRow, theme.row]}>
                         <View style={[theme.col12]}>
                             <Text style={[styles.amountText]}>Member ID: {item.member_id}</Text>

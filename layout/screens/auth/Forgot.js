@@ -38,7 +38,7 @@ export function ForgotScreen({ navigation, extraData=[] }) {
     <View style={theme.authBackground} >
       <View style={theme.authcontainer}>
 
-        <Image source={require('../../assets/logo.png')}  />        
+        <Image source={require('../../assets/logo.png')} style={[theme.logo]} />        
 
         <Text style={theme.authtitle}>Welcome Back!</Text>
 

@@ -84,6 +84,7 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
         setCartItems(response.data.cartDetail.cartProducts);
         calculateTotal(response.data.items);
         setcartDetail(response.data.cartDetail);
+        setwalletAmount(response.data.wallet)
       }
     } catch (error) {
       console.error("Cart API Error:", error);
@@ -168,12 +169,14 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
           <View style={[theme.card]}>
             <View style={[theme.cardBody, theme.row]}>
                 
+                <View style={[theme.col3, theme.mb5]}></View>
                 <View style={[theme.col6, theme.mb5]}>
                     <View style={[styles.walletBox]}>
                         <Text style={[styles.walletPrice]}>{walletAmount}</Text>
                         <Text style={[styles.walletBoxText]}>Wallet Amount</Text>
                     </View>
                 </View>
+                <View style={[theme.col3, theme.mb5]}></View>
               </View>
           </View>
       )}
@@ -210,7 +213,7 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
                 <>
                     <View style={styles.row}>
                     <Text style={styles.cellLabel}>Wallet Use</Text>
-                    <Text style={styles.cellValue}>-<Text>{(walletUseAmount || 0)}</Text></Text>
+                    <Text style={styles.cellValue}><Text>-{(walletUseAmount || 0)}</Text></Text>
                     </View>
 
                     <View style={styles.row}>
@@ -259,6 +262,7 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
                     placeholderTextColor="#999"
                     value={phone}
                     onChangeText={setphone}
+                    keyboardType='phone-pad'
                 />
                 </View>
             </View>
@@ -302,7 +306,7 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
               <Icon name="circle" size={20} style={theme.inputIcon} />
               <TextInput
                 style={theme.input}
-                placeholder="Picode"
+                placeholder="Pincode"
                 placeholderTextColor="#999"
                 value={pincode}
                 onChangeText={setpincode}
@@ -492,12 +496,13 @@ const styles = StyleSheet.create({
       flexDirection:'row',
       justifyContent:'space-between',
       alignItems:'center',
-      textAlign:'center'
+      textAlign:'center',
   },
   walletBox:{
-      borderWidth:1,
+      borderWidth:0,
       padding:10,
       borderRadius:5,
+      backgroundColor:"#4CAF50"
   },
   inrIcon:{
       fontSize:20,
@@ -508,11 +513,13 @@ const styles = StyleSheet.create({
       fontSize:20,
       fontWeight:'bold',
       textAlign:'center',
+      color:'white'
   },
   walletBoxText:{
       fontSize:17,
       fontWeight:'bold',
       textAlign:'center',
+      color:'white'
   },
   textDeviderPlus:{
       fontSize:50,

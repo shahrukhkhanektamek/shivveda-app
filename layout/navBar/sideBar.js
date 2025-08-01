@@ -127,7 +127,7 @@ const SideBar = ({ navigation, extraData = [] }) => {
             <>
               {userDetail.is_paid == 0 ? (
                 <>
-                  <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("AccountActivation")}>
+                  <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("Products")}>
                     <View style={styles.menuIcon}>
                       <Icon name="checkmark-circle" style={[theme.sideBarIconColor]} />
                     </View>

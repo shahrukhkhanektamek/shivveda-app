@@ -94,43 +94,45 @@ export function EarningScreen({ navigation, extraData=[] }){
 
                     <View style={[theme.card]}>
                         <View style={[theme.cardBody, theme.row]}>
+
+
                             
-                            <View style={[theme.col6, theme.mb5]}>
+                            <View style={[theme.col6, theme.mb5, theme.pr2]}>
                                 <View style={[styles.walletBox]}>
                                     <Text style={[styles.walletPrice]}>{amountdata.totalEarning}</Text>
                                     <Text style={[styles.walletBoxText]}>Total Eearning</Text>
                                 </View>
                             </View>
                             
-                            <View style={[theme.col6, theme.mb5]}>
+                            <View style={[theme.col6, theme.mb5, theme.pl2]}>
                                 <View style={[styles.walletBox]}>
                                     <Text style={[styles.walletPrice]}>{amountdata.totalTds}</Text>
                                     <Text style={[styles.walletBoxText]}>Total TDS</Text>
                                 </View>
                             </View>
                             
-                            <View style={[theme.col6, theme.mb5]}>
+                            <View style={[theme.col6, theme.mb5, theme.pr2]}>
                                 <View style={[styles.walletBox]}>
                                     <Text style={[styles.walletPrice]}>{amountdata.totalWallet}</Text>
                                     <Text style={[styles.walletBoxText]}>Total R. Wallet</Text>
                                 </View>
                             </View>
                             
-                            <View style={[theme.col6, theme.mb5]}>
+                            <View style={[theme.col6, theme.mb5, theme.pl2]}>
                                 <View style={[styles.walletBox]}>
                                     <Text style={[styles.walletPrice]}>{amountdata.finalEarning}</Text>
                                     <Text style={[styles.walletBoxText]}>Total Final Earning</Text>
                                 </View>
                             </View>
                             
-                            <View style={[theme.col6, theme.mb5]}>
+                            <View style={[theme.col6, theme.mb5, theme.pr2]}>
                                 <View style={[styles.walletBox]}>
                                     <Text style={[styles.walletPrice]}>{amountdata.unPaid}</Text>
                                     <Text style={[styles.walletBoxText]}>Total Unpaid Payout</Text>
                                 </View>
                             </View>
                             
-                            <View style={[theme.col6, theme.mb5]}>
+                            <View style={[theme.col6, theme.mb5, theme.pl2]}>
                                 <View style={[styles.walletBox]}>
                                     <Text style={[styles.walletPrice]}>{amountdata.paid}</Text>
                                     <Text style={[styles.walletBoxText]}>Total Paid Payout</Text>
@@ -233,9 +235,10 @@ const styles = StyleSheet.create({
         textAlign:'center'
     },
     walletBox:{
-        borderWidth:1,
+        borderWidth:0,
         padding:10,
         borderRadius:5,
+        backgroundColor:"#4CAF50"
     },
     inrIcon:{
         fontSize:20,
@@ -246,11 +249,13 @@ const styles = StyleSheet.create({
         fontSize:20,
         fontWeight:'bold',
         textAlign:'center',
+        color:'white'
     },
     walletBoxText:{
         fontSize:17,
         fontWeight:'bold',
         textAlign:'center',
+        color:'white'
     },
     textDeviderPlus:{
         fontSize:50,
@@ -259,6 +264,8 @@ const styles = StyleSheet.create({
     },
     amount:{
         textAlign:'right'
-    }
+    },
+
+ 
 });
 

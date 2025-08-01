@@ -96,7 +96,8 @@ export function SignUpScreen({ navigation, extraData=[] }) {
       <ScrollView showsVerticalScrollIndicator={false}>
       <View style={theme.authcontainer}>
 
-        <Image source={require('../../assets/logo.png')}  />
+        
+        <Image source={require('../../assets/logo.png')} style={[theme.logo]} />
         <Text style={theme.authtitle}>Create Account!</Text>
 
 

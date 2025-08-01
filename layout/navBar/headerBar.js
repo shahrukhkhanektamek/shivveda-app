@@ -43,7 +43,7 @@ const styles = {
   },
   container: {
     paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingVertical: 0,
   },
   headerContent: {
     flexDirection: 'row',
@@ -61,7 +61,7 @@ const styles = {
     fontWeight: 'bold',
   },
   notificationButton: {
-    padding: 10,
+    paddingVertical:5,
   },
   navbarBorder: {
     borderBottomWidth: 1,

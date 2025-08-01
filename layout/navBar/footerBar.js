@@ -24,10 +24,15 @@ const Footer = ({navigation}) => {
           <Text style={styles.navText}>KYC</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.navItem} activeOpacity={0.7} onPress={() => navigation.navigate('Messages')}>
+        <TouchableOpacity style={styles.navItem} activeOpacity={0.7} onPress={() => navigation.navigate('Team')}>
+          <Icon name="people" size={24} style={styles.footerIcon} />
+          <Text style={styles.navText}>Team</Text>
+        </TouchableOpacity>
+
+        {/* <TouchableOpacity style={styles.navItem} activeOpacity={0.7} onPress={() => navigation.navigate('Messages')}>
           <Icon name="share" size={24} style={styles.footerIcon} />
           <Text style={styles.navText}>Share</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity style={styles.navItem} activeOpacity={0.7} onPress={() => navigation.navigate('Profile')}>
           <Icon name="person" size={24} style={styles.footerIcon} />

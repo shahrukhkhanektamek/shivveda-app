@@ -26,21 +26,13 @@ export function TreeScreen({ navigation, extraData=[] }) {
 
   return (
     <View style={{ flex: 1 }}>
-
-
-       
-
-                      <WebView
-                         originWhitelist={['*']}
-                         
-                      style={[styles.webview]} source={{ uri: `https://shivveda.in/tree?id=${userDetail.id}` }} 
-                      scalesPageToFit={false}
-                      javaScriptEnabled={true}
-                      />
-                             
-
-
-      
+      <WebView
+          originWhitelist={['*']}
+          
+      style={[styles.webview]} source={{ uri: `https://shivveda.in/tree?id=${userDetail.id}` }} 
+      scalesPageToFit={false}
+      javaScriptEnabled={true}
+      />      
     </View>
   );
 }

@@ -49,7 +49,7 @@ export function ProductsScreen({ navigation, extraData = [] }) {
         try {
             if (qty !== '' && id) {
                 const filedata = { id, qty };
-                const response = await postData(filedata, urls.cartAdd, "POST", navigation, extraData);
+                const response = await postData(filedata, urls.cartAdd, "POST", navigation, extraData, 1, 1);
                 if (response.status === 200) {
                     const cartData = response.data;
                     setCartNotEmpty(cartData.cartDetail?.cartCount || 0);
@@ -126,8 +126,8 @@ export function ProductsScreen({ navigation, extraData = [] }) {
             <Image source={{ uri: item.image }} style={styles.image} />
             <View style={styles.details}>
                 <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.price}>DP: {item.sale_price}</Text>
                 <Text style={styles.price}>MRP: {item.real_price}</Text>
+                <Text style={styles.price}>DP: {item.sale_price}</Text>
                 <Text style={styles.price}>BV: {item.bv}</Text>
 
                 <View style={styles.buttonGroup}>

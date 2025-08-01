@@ -13,7 +13,7 @@ export function SplashScreen ({ navigation }) {
 
 
   useEffect(() => {
-    // Navigate to HomeScreen after 2 seconds
+    // Navigate to HomeScreen after 2 seconds 
     setTimeout(() => {
       navigation.reset({
         index: 0,
@@ -26,7 +26,7 @@ export function SplashScreen ({ navigation }) {
 
     
     <View style={styles.container}>
-      <Image source={require('../assets/fav.png')} style={styles.logo} />      
+      <Image source={require('../assets/logo.png')} style={styles.logo} />      
     </View>
   );
 };
@@ -40,9 +40,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff', // Background color for splash
   },
   logo: {
-    width: 150,
-    height: 150, // Set the size of the logo
+    width: 200,
+    height: 200, // Set the size of the logo
     marginBottom: 20,
+    resizeMode: 'contain',
   },
   title: {
     fontSize: 24,

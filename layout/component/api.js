@@ -10,13 +10,15 @@ const storage = new MMKV();
 
 
 export const apiUrl = () => {
-  // const mainUrl = 'http://192.168.1.61/projects/irshad/shivveda.in/api/user/';   
-  const mainUrl = 'https://shivveda.in/api/user/';  
+  // const mainUrl = 'http://192.168.29.11/projects/irshad/shivveda.in/api/user/';   
+  const mainUrl = 'http://192.168.1.61/projects/irshad/shivveda.in/api/user/';   
+  // const mainUrl = 'https://shivveda.in/api/user/';  
   return {
     "login":`${mainUrl}login`,
     "registerOtpSend":`${mainUrl}register-otp-send`,
     "register":`${mainUrl}register`,
     "updateProfile":`${mainUrl}update-profile`,
+    "updateProfileImage":`${mainUrl}update-profile-image`,
     "updatePassword":`${mainUrl}update-password`,
     "getProfile":`${mainUrl}get-profile`,
     "logout":`${mainUrl}logout`,
@@ -71,7 +73,7 @@ export const apiUrl = () => {
 
 
 
-export const postData = async (filedata, url, method, navigation, extraData) => {
+export const postData = async (filedata, url, method, navigation, extraData, checkShowLoader=0, checkShowToast=0) => {
 
   // console.log(url)
   // return false;
@@ -85,7 +87,7 @@ export const postData = async (filedata, url, method, navigation, extraData) => 
     const params = new URLSearchParams({ ...filedata, device_id: deviceId }).toString();
     url += `?${params}`; // Append query parameters
   }
-
+  if(!checkShowLoader)
   extraData.loader.setShowLoader(true);
   
   
@@ -98,7 +100,7 @@ export const postData = async (filedata, url, method, navigation, extraData) => 
       },
       body: data, // Convert data to JSON string
     });    
-    return await responseCheck(response, navigation, extraData);   
+    return await responseCheck(response, navigation, extraData, checkShowLoader, checkShowToast);   
   } catch (error) {
     extraData.loader.setShowLoader(false);
     console.error("Failed to make POST request:", error);
@@ -106,7 +108,7 @@ export const postData = async (filedata, url, method, navigation, extraData) => 
   }
 };
 
-const responseCheck = async (response, navigation, extraData) => {
+const responseCheck = async (response, navigation, extraData, checkShowLoader, checkShowToast) => {
 
   
   try {
@@ -130,11 +132,11 @@ const responseCheck = async (response, navigation, extraData) => {
     if (result.status === 200) {
       switch (result.action) {
         case "add":
-          showSuccessMessage(result.message, extraData, 1);
+          showSuccessMessage(result.message, extraData, 1, checkShowToast);
           return result;
   
         case "login":
-          showSuccessMessage(result.message, extraData, 1);
+          showSuccessMessage(result.message, extraData, 1, checkShowToast);
           storeLoginToken(result);
           extraData.user.setUsername('');
           extraData.user.setPassword('');
@@ -146,7 +148,7 @@ const responseCheck = async (response, navigation, extraData) => {
 
           case "tokenUpdate":
           case "register":
-          showSuccessMessage(result.message, extraData, 1);
+          showSuccessMessage(result.message, extraData, 1, checkShowToast);
           storeLoginToken(result);
           navigation.reset({
             index: 0,
@@ -155,7 +157,7 @@ const responseCheck = async (response, navigation, extraData) => {
           return;
 
           case "placeOrder":
-          showSuccessMessage(result.message, extraData, 1);
+          showSuccessMessage(result.message, extraData, 1, checkShowToast);
           storeLoginToken(result);
           navigation.reset({
             index: 0,
@@ -164,7 +166,7 @@ const responseCheck = async (response, navigation, extraData) => {
           return result;
           
           case "logout":
-          showSuccessMessage(result.message, extraData, 1);
+          showSuccessMessage(result.message, extraData, 1, checkShowToast);
           storage.delete('token');
           navigation.reset({
             index: 0,
@@ -183,7 +185,7 @@ const responseCheck = async (response, navigation, extraData) => {
           return result;
   
         default:
-          showSuccessMessage(result.message, extraData, 1);
+          showSuccessMessage(result.message, extraData, 1, checkShowToast);
           return result;
       }
     } 
@@ -192,18 +194,18 @@ const responseCheck = async (response, navigation, extraData) => {
   
       if (result.status === 400) {
         if (result.action === "login") {
-          showSuccessMessage(result.message, extraData, 0);
+          showSuccessMessage(result.message, extraData, 0, checkShowToast);
           // storeLoginToken('');
         } else if (result.action === "edit" || result.action === "add") {
-          showSuccessMessage(result.message, extraData, 0);
+          showSuccessMessage(result.message, extraData, 0, checkShowToast);
         } else if (result.action === "check_login") {
           return result;
         } else {
-          showSuccessMessage(result.message, extraData, 0);
+          showSuccessMessage(result.message, extraData, 0, checkShowToast);
         }
       } 
       else if (result.status === 401) {
-        // showSuccessMessage(result.message, extraData, 0);
+        // showSuccessMessage(result.message, extraData, 0, checkShowToast);
         navigation.reset({
           index: 0,
           routes: [{ name: 'Login' }],
@@ -214,7 +216,7 @@ const responseCheck = async (response, navigation, extraData) => {
         refreshScreen();
       } 
       else {
-        showSuccessMessage(response.message, extraData, 0);
+        showSuccessMessage(response.message, extraData, 0, checkShowToast);
       } 
     }
 
@@ -226,10 +228,13 @@ const responseCheck = async (response, navigation, extraData) => {
   }
 };
 
-export const showSuccessMessage = (message, extraData, type) => {
-  extraData.alert.setAlertMessage(message);
-  extraData.alert.setShowAlert(true);
-  extraData.alert.setAlertType(type);
+export const showSuccessMessage = (message, extraData, type, checkShowToast) => {
+  if(!checkShowToast)
+  {
+    extraData.alert.setAlertMessage(message);
+    extraData.alert.setShowAlert(true);
+    extraData.alert.setAlertType(type);
+  }
 };
 
 const showErrorMessage = (message) => {

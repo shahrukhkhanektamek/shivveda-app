@@ -6,6 +6,12 @@ themeBg:{
     flex:1,
     paddingHorizontal: 15,
 },
+logo: {
+    width: 200,
+    height: 200, // Set the size of the logo
+    marginBottom: 0,
+    resizeMode: 'contain',
+},
 pageTitle:{
     fontSize:25,
     paddingVertical:18,
@@ -33,7 +39,8 @@ container: {
 },
 headerLogo:{
     width:130,
-    height:40
+    height:50,
+    resizeMode:'contain'
 },
 
 authBackground: {
@@ -116,7 +123,7 @@ authsignupLink: {
 },
 button:{
     width: '100%',
-    paddingVertical: 15,
+    paddingVertical: 0,
     alignItems: 'center',
 },
 tabButton:{
@@ -325,6 +332,17 @@ statusSuccess:{
     textAlign:'center'
 },
 
+statusDanger:{
+    backgroundColor:'red',
+    color:'white',
+    width:'fit-contecnt',
+    padding:2,
+    fontSize:10,
+    fontWeight:'bold',
+    borderRadius:2,
+    textAlign:'center'
+},
+
 barsIcon:{
     color:'#2E7D32',
     fontSize:25
@@ -499,6 +517,129 @@ mb19:{
 mb20:{
     marginBottom:20,
 },
+
+
+mr1:{
+    marginRight:1,
+},
+mr2:{
+    marginRight:2,
+},
+mr3:{
+    marginRight:3,
+},
+mr4:{
+    marginRight:4,
+},
+mr5:{
+    marginRight:5,
+},
+mr6:{
+    marginRight:6,
+},
+mr7:{
+    marginRight:7,
+},
+mr8:{
+    marginRight:8,
+},
+mr9:{
+    marginRight:9,
+},
+mr10:{
+    marginRight:10,
+},
+mr11:{
+    marginRight:11,
+},
+mr12:{
+    marginRight:12,
+},
+mr13:{
+    marginRight:13,
+},
+mr14:{
+    marginRight:14,
+},
+mr15:{
+    marginRight:15,
+},
+mr16:{
+    marginRight:16,
+},
+mr17:{
+    marginRight:17,
+},
+mr18:{
+    marginRight:18,
+},
+mr19:{
+    marginRight:19,
+},
+mr20:{
+    marginRight:20,
+},
+ml1:{
+    marginLeft:1,
+},
+ml2:{
+    marginLeft:2,
+},
+ml3:{
+    marginLeft:3,
+},
+ml4:{
+    marginLeft:4,
+},
+ml5:{
+    marginLeft:5,
+},
+ml6:{
+    marginLeft:6,
+},
+ml7:{
+    marginLeft:7,
+},
+ml8:{
+    marginLeft:8,
+},
+ml9:{
+    marginLeft:9,
+},
+ml10:{
+    marginLeft:10,
+},
+ml11:{
+    marginLeft:11,
+},
+ml12:{
+    marginLeft:12,
+},
+ml13:{
+    marginLeft:13,
+},
+ml14:{
+    marginLeft:14,
+},
+ml15:{
+    marginLeft:15,
+},
+ml16:{
+    marginLeft:16,
+},
+ml17:{
+    marginLeft:17,
+},
+ml18:{
+    marginLeft:18,
+},
+ml19:{
+    marginLeft:19,
+},
+ml20:{
+    marginLeft:20,
+},
+
 
 pl2:{
     paddingLeft:2,

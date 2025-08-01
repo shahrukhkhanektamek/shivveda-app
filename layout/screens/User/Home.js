@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   RefreshControl,
   Clipboard,
+  Share,
   Alert
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -76,6 +77,35 @@ export function HomeScreen({ navigation, extraData = [] }) {
 
 
 
+  const handleShare = async (shareLink) => {
+    try {
+      const result = await Share.share({
+        message: shareLink,
+        url: shareLink, // iOS ke liye
+        title: 'My Reffer Link' // iOS ke liye
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+          console.log('Shared with activity type: ', result.activityType);
+        } else {
+          // shared
+          // Alert.alert('Success', 'Link shared successfully!');
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+        console.log('Dismissed');
+      }
+    } catch (error) {
+      Alert.alert('Error', error.message);
+    }
+  };
+
+
+
+
+
 
   const onRefresh = useCallback(() => {
     // setPage(0);
@@ -121,10 +151,10 @@ export function HomeScreen({ navigation, extraData = [] }) {
                 <View style={[theme.alertBox, theme.alertDanger, theme.mt20]}>
                   <Icon name="exclamation-circle" size={24} color="#FFA500" />
                   <View style={theme.alerttextContainer}>
-                    <Text style={theme.alertText}>Your kcy not component yet.</Text>
+                    <Text style={theme.alertText}>Your Kyc is pending! Please update your Kyc.</Text>
                   </View>
                   <TouchableOpacity style={theme.alertbutton} onPress={()=>navigation.navigate('Kyc')}>
-                    <Text style={theme.alertbuttonText}>Kyc Now</Text>
+                    <Text style={theme.alertbuttonText}>Click Here</Text>
                   </TouchableOpacity>
                 </View>
                 :null
@@ -299,8 +329,8 @@ export function HomeScreen({ navigation, extraData = [] }) {
                         colors={GradientStyles.auth.colors}
                         style={theme.authbutton}
                       >
-                        <TouchableOpacity style={theme.button} onPress={copyLeftJoinLink}>
-                          <Text style={theme.authbuttonText}>Copy</Text>
+                        <TouchableOpacity style={theme.button} onPress={() => handleShare(data.leftJoinLink)}>
+                          <Text style={theme.authbuttonText}>Share</Text>
                         </TouchableOpacity>
                       </LinearGradient>
                     </View>
@@ -324,8 +354,8 @@ export function HomeScreen({ navigation, extraData = [] }) {
                         colors={GradientStyles.auth.colors}
                         style={theme.authbutton}
                       >
-                        <TouchableOpacity style={theme.button} onPress={copyRightJoinLink}>
-                          <Text style={theme.authbuttonText}>Copy</Text>
+                        <TouchableOpacity style={theme.button} onPress={() => handleShare(data.rightJoinLink)}>
+                          <Text style={theme.authbuttonText}>Share</Text>
                         </TouchableOpacity>
                       </LinearGradient>
                     </View>

@@ -18,6 +18,7 @@ import { ChangePassword } from './layout/screens/auth/ChangePassword';
 import { CreatePasswordScreen } from './layout/screens/auth/CreatePassword';
 
 import { ProfileScreen } from './layout/screens/User/Profile';
+import { ProfileImageScreen } from './layout/screens/User/ProfileImageScreen';
 import { SettingScreen } from './layout/screens/Setting';
 
 
@@ -133,6 +134,14 @@ function App() {
           {props => (
             <NormalScreen {...props}>
               <ProfileScreen {...props} />
+            </NormalScreen>
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="ProfileImage">
+          {props => (
+            <NormalScreen {...props}>
+              <ProfileImageScreen {...props} />
             </NormalScreen>
           )}
         </Stack.Screen>
