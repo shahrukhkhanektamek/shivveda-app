@@ -126,8 +126,8 @@ export function ProductsScreen({ navigation, extraData = [] }) {
             <Image source={{ uri: item.image }} style={styles.image} />
             <View style={styles.details}>
                 <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.price}>DP: {item.sale_price}</Text>
                 <Text style={styles.price}>MRP: {item.real_price}</Text>
+                <Text style={styles.price}>DP: {item.sale_price}</Text>
                 <Text style={styles.price}>BV: {item.bv}</Text>
 
                 <View style={styles.buttonGroup}>

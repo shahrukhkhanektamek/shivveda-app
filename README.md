@@ -25,6 +25,12 @@ cd ../
 
 
 
+adb devices
+adb tcpip 5555
+adb connect 192.168.29.39:5555
+
+npm install react-native-image-crop-picker
+npx pod-install
 
 mkdir -p android/app/src/main/assets
 cd android

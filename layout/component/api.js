@@ -10,6 +10,7 @@ const storage = new MMKV();
 
 
 export const apiUrl = () => {
+  // const mainUrl = 'http://192.168.29.11/projects/irshad/shivveda.in/api/user/';   
   // const mainUrl = 'http://192.168.1.61/projects/irshad/shivveda.in/api/user/';   
   const mainUrl = 'https://shivveda.in/api/user/';  
   return {
@@ -17,6 +18,7 @@ export const apiUrl = () => {
     "registerOtpSend":`${mainUrl}register-otp-send`,
     "register":`${mainUrl}register`,
     "updateProfile":`${mainUrl}update-profile`,
+    "updateProfileImage":`${mainUrl}update-profile-image`,
     "updatePassword":`${mainUrl}update-password`,
     "getProfile":`${mainUrl}get-profile`,
     "logout":`${mainUrl}logout`,

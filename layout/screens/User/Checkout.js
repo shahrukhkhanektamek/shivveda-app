@@ -84,6 +84,7 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
         setCartItems(response.data.cartDetail.cartProducts);
         calculateTotal(response.data.items);
         setcartDetail(response.data.cartDetail);
+        setwalletAmount(response.data.wallet)
       }
     } catch (error) {
       console.error("Cart API Error:", error);
@@ -210,7 +211,7 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
                 <>
                     <View style={styles.row}>
                     <Text style={styles.cellLabel}>Wallet Use</Text>
-                    <Text style={styles.cellValue}>-<Text>{(walletUseAmount || 0)}</Text></Text>
+                    <Text style={styles.cellValue}><Text>-{(walletUseAmount || 0)}</Text></Text>
                     </View>
 
                     <View style={styles.row}>
@@ -259,6 +260,7 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
                     placeholderTextColor="#999"
                     value={phone}
                     onChangeText={setphone}
+                    keyboardType='phone-pad'
                 />
                 </View>
             </View>
@@ -302,7 +304,7 @@ export function CheckoutScreen({ navigation, extraData = [] }) {
               <Icon name="circle" size={20} style={theme.inputIcon} />
               <TextInput
                 style={theme.input}
-                placeholder="Picode"
+                placeholder="Pincode"
                 placeholderTextColor="#999"
                 value={pincode}
                 onChangeText={setpincode}

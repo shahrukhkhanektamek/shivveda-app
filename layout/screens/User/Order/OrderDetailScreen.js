@@ -41,6 +41,9 @@ export function OrderDetailScreen({ navigation, extraData=[], route }){
                 setData(data);
                 setorderProducts(orderProducts);
                 setcartDetail(JSON.parse(data.amount_detail));
+
+                setwalletUseAmount(data.wallet_amount)
+
                 console.log(cartDetail); 
             } 
             setisLoading(false) 

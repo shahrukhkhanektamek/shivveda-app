@@ -61,6 +61,9 @@ export function OrderScreen({ navigation, extraData=[] }){
         setPage(nextPage);
     };
 
+    const priceFormat = (value) => {
+        return `₹${parseFloat(value).toFixed(2)}`;
+    };
     
   if (isLoading) {
     return ( 
@@ -122,11 +125,11 @@ export function OrderScreen({ navigation, extraData=[] }){
                         <View style={[theme.col10]}>
                             <View style={[theme.row]}>
                                 <Text style={[theme.cardRowBold]}>Order ID:</Text>
-                                <Text style={[theme.cardRowText]}>{item.order_id}</Text>
+                                <Text style={[theme.cardRowText]}>#{item.order_id}</Text>
                             </View>
                             <View style={[theme.row]}>
                                 <Text style={[theme.cardRowBold]}>Order Date:</Text>
-                                <Text style={[theme.cardRowText]}>{item.add_date_time}</Text>
+                                <Text style={[theme.cardRowText]}>{item.add_date_time1}</Text>
                             </View>
                             <View style={[theme.row]}>
                                 <Text style={[theme.cardRowBold]}>Name:</Text>
@@ -145,7 +148,20 @@ export function OrderScreen({ navigation, extraData=[] }){
                                 <Text style={[theme.cardRowText]}>{item.final_amount}</Text>
                             </View>
                         </View>
-                        <View style={[theme.col2]}><Text style={[theme.statusSuccess]}>Paid</Text></View>
+
+                {item.status==0?(
+                    <View style={[theme.col2]}><Text style={[theme.statusSuccess]}>Confirm</Text></View>
+                ):item.status==1?(
+                    <View style={[theme.col2]}><Text style={[theme.statusSuccess]}>Proccess</Text></View>
+                ):item.status==2?(
+                    <View style={[theme.col2]}><Text style={[theme.statusSuccess]}>Shipped</Text></View>
+                ):item.status==3?(
+                    <View style={[theme.col2]}><Text style={[theme.statusSuccess]}>Delivered</Text></View>
+                ):item.status==4?(
+                    <View style={[theme.col2]}><Text style={[theme.statusSuccess]}>Cancel</Text></View>
+                ):null
+                }
+
                     </View>
                 </TouchableOpacity>
           </React.Fragment>

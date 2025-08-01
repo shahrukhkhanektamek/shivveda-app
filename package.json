@@ -19,6 +19,7 @@
     "react-native-device-info": "^14.0.4",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.22.0",
+    "react-native-image-crop-picker": "^0.50.1",
     "react-native-image-picker": "^7.2.3",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-mmkv": "^3.2.0",

@@ -58,15 +58,13 @@ export function NewRegisterScreen({ navigation, extraData=[] }){
         "password":password,
         "confirm_password":cpassword
     };
-
     
     if(!sponser_id) showSuccessMessage("Wrong Sponser ID", extraData, 0);
     else if(!name) showSuccessMessage("Enter Name", extraData, 0);
     else if(!phone) showSuccessMessage("Enter Phone", extraData, 0);
     else if(!password) showSuccessMessage("Enter Password", extraData, 0);
-    else if(!confirm_password) showSuccessMessage("Enter Confirm Password", extraData, 0);
-
-    return false;
+    else if(!cpassword) showSuccessMessage("Enter Confirm Password", extraData, 0);
+    
 
     const response = await postData(filedata, urls.newRegister,"POST", navigation,extraData);
     if(response.status==200)

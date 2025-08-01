@@ -70,7 +70,10 @@ export function DirectTeamScreen({ navigation, route }){
                         <View style={[theme.cardRow, theme.row]}>
                           <View style={[theme.col4]}>
                             <Image source={{uri:item.image}} style={[theme.cardImage, styles.userImage]} />
-                            <Text style={[theme.statusSuccess]}>Paid</Text>
+                            {item.is_paid==1?(
+                              <Text style={[theme.statusSuccess]}>Paid</Text>
+                            ):<Text style={[theme.statusDanger]}>UnPaid</Text>
+                            }
                           </View>
                           <View style={[theme.col8]}>
                               <View style={[theme.row]}>

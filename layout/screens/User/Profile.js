@@ -42,6 +42,7 @@ export function ProfileScreen({ navigation, extraData=[] }){
   const [address, setaddress] = useState();
   const [city, setcity] = useState();
   const [user_id, setuser_id] = useState();
+  const [image, setimage] = useState();
   const [isLoading, setisLoading] = useState(true);
 
 
@@ -91,6 +92,7 @@ export function ProfileScreen({ navigation, extraData=[] }){
           setSelectedState(data.state)
           setcity(data.city)
           setuser_id(data.user_id)
+          setimage(data.image)
           setisLoading(false)
         } 
       } catch (error) {
@@ -141,9 +143,12 @@ export function ProfileScreen({ navigation, extraData=[] }){
                   </View>
                   <View style={[theme.col8, styles.profileImageSection]}>
                       <Image
-                      source={require('../../assets/user.jpg')}
+                      source={{uri:image}}
                       style={styles.profileImage}
                       />
+                      <TouchableOpacity style={[theme.mt10]} onPress={() => navigation.navigate("ProfileImage")}>
+                        <Text style={[theme.statusSuccess, theme.pl2, theme.pr2]}>Update Image</Text>
+                      </TouchableOpacity>
                       <Text style={styles.name}>{name}</Text>
                       <Text style={styles.title}>My ID.:- {user_id}</Text>
                   </View>

@@ -325,6 +325,17 @@ statusSuccess:{
     textAlign:'center'
 },
 
+statusDanger:{
+    backgroundColor:'red',
+    color:'white',
+    width:'fit-contecnt',
+    padding:2,
+    fontSize:10,
+    fontWeight:'bold',
+    borderRadius:2,
+    textAlign:'center'
+},
+
 barsIcon:{
     color:'#2E7D32',
     fontSize:25
