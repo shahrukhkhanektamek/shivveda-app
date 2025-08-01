@@ -140,7 +140,7 @@ export function HomeScreen({ navigation, extraData = [] }) {
                     />
                   </View>
                   <Text style={[styles.name, theme.mt10]}>ID:- {user.user_id}</Text>
-                  <Text style={[styles.name]}>Shahrukh</Text>
+                  <Text style={[styles.name]}>{user.name}</Text>
                   <Text style={[styles.totalIncome]}>Total Income: <Text style={[styles.totalIncomeAmount]}>{incomes.all_time_income}</Text></Text>
                   <Text style={[styles.todayIncome]}>Today Income: <Text style={[styles.todayIncomeAmount]}>{incomes.today_income}</Text></Text>
 
