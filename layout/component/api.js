@@ -11,8 +11,8 @@ const storage = new MMKV();
 
 export const apiUrl = () => {
   // const mainUrl = 'http://192.168.29.11/projects/irshad/shivveda.in/api/user/';   
-  const mainUrl = 'http://192.168.1.61/projects/irshad/shivveda.in/api/user/';   
-  // const mainUrl = 'https://shivveda.in/api/user/';  
+  // const mainUrl = 'http://192.168.1.61/projects/irshad/shivveda.in/api/user/';   
+  const mainUrl = 'https://shivveda.in/api/user/';  
   return {
     "login":`${mainUrl}login`,
     "registerOtpSend":`${mainUrl}register-otp-send`,
